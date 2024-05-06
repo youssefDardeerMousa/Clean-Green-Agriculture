@@ -1,3 +1,4 @@
+import { object } from "joi";
 import mongoose, { Schema, Types, model } from "mongoose";
 
 const orderSchema = new Schema(
@@ -27,7 +28,7 @@ const orderSchema = new Schema(
         totalPrice: Number,
       },
     ],
-    invoice: { id: String, url: String }, // reciept
+    invoice: {type:String}, // reciept
     address: {
       type: String,
       required: true,

@@ -119,47 +119,117 @@ export const createOrder = CatchError(async (req, res, next) => {
     paid: order.finalPrice, // Final paid amount after discounts
     invoice_nr: order._id,
   };
-  const rootPath = path.resolve(__dirname, './../../../');
-  const pdfPath = path.join(rootPath, 'invoiceTemp', `${order._id}.pdf`);
-  createInvoice(invoice, pdfPath);
+ order.invoice = invoice;
+ await order.save();
+  // const pdfPath = path.join(__dirname, `./../../../invoiceTemp/${order._id}.pdf`);
+  // createInvoice(invoice, pdfPath);
 
-  const { public_id, secure_url } = await cloudinary.uploader.upload(pdfPath, {
-    folder: `${process.env.foldercloudnairy}/order/invoice/${user._id}`,
-  });
+  // const { public_id, secure_url } = await cloudinary.uploader.upload(pdfPath, {
+  //   folder: `${process.env.foldercloudnairy}/order/invoice/${user._id}`,
+  // });
 
-  order.invoice = { id: public_id, url: secure_url };
-  await order.save();
-  if (!fs.existsSync(pdfPath)) {
-    throw new Error(`PDF file not found at ${pdfPath}`);
-  }
+  // order.invoice = { id: public_id, url: secure_url };
+  // await order.save();
+
+  // // Send the invoice to the user via email
+  // const pdfAttachment = fs.readFileSync(pdfPath);
+  const invoiceTableHTML = `
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stylish Invoice Table</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      padding: 0;
+    }
+    
+    table {
+      width: 50%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+    
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: left;
+    }
+    
+    th {
+      background-color: #f9f9f9;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    
+    tr:hover {
+      background-color: #e9e9e9;
+    }
+  </style>
+  </head>
+  <body>
+  <table>
+    <thead>
+      <tr>
+        <th>Field</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Client Name</td>
+        <td>${invoice.shipping.name}</td>
+      </tr>
+      <tr>
+        <td>Address</td>
+        <td>${invoice.shipping.address}</td>
+      </tr>
+      <tr>
+        <td>Country</td>
+        <td>${invoice.shipping.country}</td>
+      </tr>
+      <tr>
+        <td>Invoice Number</td>
+        <td>${invoice.invoice_nr}</td>
+      </tr>
+      <tr>
+        <td>Subtotal</td>
+        <td>${invoice.subtotal}</td>
+      </tr>
+      <tr>
+        <td>Paid Amount</td>
+        <td>${invoice.paid}</td>
+      </tr>
+    </tbody>
+  </table>
+  </body>
+  </html>
   
-  // Send the invoice to the user via email
-  const pdfAttachment = fs.readFileSync(pdfPath);
-
+`;
   const mailOptions = {
     from: process.env.Email,
     to: user.Email,
     subject: 'Invoice',
     text: 'Order Invoice',
-    attachments: [{
-      filename: 'invoice.pdf',
-      content: pdfAttachment,
-      contentType: 'application/pdf',
-    }],
+  html:invoiceTableHTML,
   };
 
-sendEmail(mailOptions, (error, info) => {
-    if (error) {
-     
-    } else {
-       updateStock([...order.products, ...order.subcategories], true); // Update stock status
-      clearCart(user._id); // Clear the user's cart
+const isSent = await sendEmail(mailOptions);
+  if(isSent) {
+    console.log("Done Payment");
+    updateStock([...order.products, ...order.subcategories], true); // Update stock status
+   clearCart(user._id); // Clear the user's cart
 
-      
-    }
-  });
-
-  fs.unlinkSync(pdfPath);
+  }
 
   
   if (payment === "visa") {
