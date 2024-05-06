@@ -24,7 +24,7 @@ const activationCode= Crypto.randomBytes(64).toString('hex')
 //create user
 const user=await User.create({Name,Email,Password:hashPassword,RePassword:hashPassword,activationCode})
 //create confirmationLink
-const link=`https://clean-green-app.vercel.app/auth/confirmEmail/${activationCode}`;
+const link=`https://clean-green-agriculture-62py.onrender.com/auth/confirmEmail/${activationCode}`;
 
 // send email
 const IsSent = await sendEmail({ to: Email, subject: "Activate Account", html: SignUpTemp(link) });
@@ -40,7 +40,7 @@ export const activationAccount = async (req, res, next) => {
    
     const check = await User.findOneAndUpdate({ activationCode: req.params.activationCode }, {
         IsConfirmed: true,
-      //  $unset: { activationCode: 1 }
+        $unset: { activationCode: 1 }
     });
     if(!check){
       return res.status(400).json({success:false,status:400,Message:"Not Found User or error activationCode or maybe your account activated before"});
@@ -100,7 +100,7 @@ export const activationAccount = async (req, res, next) => {
     // Send HTML respons
     await CartModel.create({user:check._id})
 
-   return   res.status(200).header('Content-Type', 'text/html').send(htmlResponse);
+   return res.status(200).header('Content-Type', 'text/html').send(htmlResponse);
 };
 
 export const login=async(req,res,next)=>{
