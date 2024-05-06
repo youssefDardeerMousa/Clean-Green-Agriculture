@@ -119,8 +119,8 @@ export const createOrder = CatchError(async (req, res, next) => {
     paid: order.finalPrice, // Final paid amount after discounts
     invoice_nr: order._id,
   };
-
-  const pdfPath = path.join(__dirname, `./../../../invoiceTemp/${order._id}.pdf`);
+  const rootPath = path.resolve(__dirname, './../../../');
+  const pdfPath = path.join(rootPath, 'invoiceTemp', `${order._id}.pdf`);
   createInvoice(invoice, pdfPath);
 
   const { public_id, secure_url } = await cloudinary.uploader.upload(pdfPath, {
@@ -129,7 +129,10 @@ export const createOrder = CatchError(async (req, res, next) => {
 
   order.invoice = { id: public_id, url: secure_url };
   await order.save();
-
+  if (!fs.existsSync(pdfPath)) {
+    throw new Error(`PDF file not found at ${pdfPath}`);
+  }
+  
   // Send the invoice to the user via email
   const pdfAttachment = fs.readFileSync(pdfPath);
 
