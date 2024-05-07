@@ -121,18 +121,7 @@ export const createOrder = CatchError(async (req, res, next) => {
   };
  order.invoice = invoice;
  await order.save();
-  // const pdfPath = path.join(__dirname, `./../../../invoiceTemp/${order._id}.pdf`);
-  // createInvoice(invoice, pdfPath);
-
-  // const { public_id, secure_url } = await cloudinary.uploader.upload(pdfPath, {
-  //   folder: `${process.env.foldercloudnairy}/order/invoice/${user._id}`,
-  // });
-
-  // order.invoice = { id: public_id, url: secure_url };
-  // await order.save();
-
-  // // Send the invoice to the user via email
-  // const pdfAttachment = fs.readFileSync(pdfPath);
+ 
   const invoiceTableHTML = `
   <!DOCTYPE html>
   <html lang="en">

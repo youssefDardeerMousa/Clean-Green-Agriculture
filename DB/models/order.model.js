@@ -27,7 +27,17 @@ const orderSchema = new Schema(
         totalPrice: Number,
       },
     ],
-    invoice: {type:String}, // reciept
+    invoice: {
+      shipping: {
+        name: { type: String },
+        address: { type: String },
+        country: { type: String,  }, 
+      },
+  items: [{ type: String}], 
+  subtotal: { type: Number },
+  paid: { type: Number },
+  invoice_nr: { type: Schema.Types.ObjectId }, 
+    }, // reciept
     address: {
       type: String,
       required: true,
