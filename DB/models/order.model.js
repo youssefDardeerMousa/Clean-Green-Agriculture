@@ -1,4 +1,3 @@
-import { object } from "joi";
 import mongoose, { Schema, Types, model } from "mongoose";
 
 const orderSchema = new Schema(
