@@ -42,7 +42,10 @@ export const GetArticle = CatchError(async (req, res, next) => {
     const skip = (page - 1) * limit;
 
     // Query the database with pagination
-    const articles = await Article.find().skip(skip).limit(limit);
+    const articles = await Article.find().populate({
+        path: 'createdBy',
+        select: 'Name'
+      }).skip(skip).limit(limit);
     
     // Get total count of articles for pagination metadata
     const total = await Article.countDocuments();
