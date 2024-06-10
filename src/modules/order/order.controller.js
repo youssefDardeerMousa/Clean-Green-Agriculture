@@ -265,7 +265,7 @@ const isSent = await sendEmail(mailOptions);
         product_data: {
           name: product.name,
         },
-        unit_amount: product.itemPrice * 100,
+        unit_amount: Math.round(product.itemPrice * 100),
       },
       quantity: product.quantity,
     })).concat(order.subcategories.map((subcategory) => ({
@@ -274,7 +274,7 @@ const isSent = await sendEmail(mailOptions);
         product_data: {
           name: subcategory.name,
         },
-        unit_amount: subcategory.itemPrice * 100,
+        unit_amount:Math.round(subcategory.itemPrice * 100),
       },
       quantity: subcategory.quantity,
     })));

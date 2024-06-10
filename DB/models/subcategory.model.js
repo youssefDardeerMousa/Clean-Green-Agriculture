@@ -41,10 +41,13 @@ const subCategorySchema = new Schema(
 // *************** Virtuals ************ //
 subCategorySchema.virtual("finalPrice").get(function () {
   // this >>> current document >>> product-schema
+  // if (this.price) {
+  //   return Number.parseFloat(
+  //     this.price - (this.price * this.discount || 0) / 100
+  //   ).toFixed(2);
+  // }
   if (this.price) {
-    return Number.parseFloat(
-      this.price - (this.price * this.discount || 0) / 100
-    ).toFixed(2);
+    return Math.round(this.price - (this.price * this.discount || 0) / 100)
   }
 });
 
