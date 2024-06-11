@@ -36,6 +36,7 @@ const productSchema = new Schema(
 // *************** Virtuals ************ //
 productSchema.virtual("finalPrice").get(function () {
   // this >>> current document >>> product-schema
+
   // if (this.price) {
   //   return Number.parseFloat(
   //     this.price - (this.price * this.discount || 0) / 100

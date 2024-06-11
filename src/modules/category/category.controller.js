@@ -38,6 +38,8 @@ export const UpdateCategory=CatchError(
         req.body.Name?category.Slug=slugify(req.body.Name) : category.Slug
         // file
         if(req.file){
+            // const {public_id,secure_url} = await cloudinary.uploader.upload(
+            //     req.file.path
             const {secure_url,public_id} = await cloudinary.uploader.upload(
                 req.file.path,
                 {folder:`${process.env.foldercloudnairy}/category`}

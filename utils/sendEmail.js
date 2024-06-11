@@ -3,6 +3,7 @@ export const sendEmail = async({to,subject,html, attachments})=>{
     // sender 
      const transporter=nodemailer.createTransport({
         host: 'smtp.gmail.com',
+
         port : 465,
         secure:true,
         service:'gmail',

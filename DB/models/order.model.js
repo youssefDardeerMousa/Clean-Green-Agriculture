@@ -27,6 +27,7 @@ const orderSchema = new Schema(
         totalPrice: Number,
       },
     ],
+
     invoice: { id: String, url: String }, // reciept
     address: {
       type: String,

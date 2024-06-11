@@ -30,4 +30,4 @@ router.get('/',GetAllCategory)
 router.get('/search',SearchCategory)
 
 
-export default router 
+export default router;

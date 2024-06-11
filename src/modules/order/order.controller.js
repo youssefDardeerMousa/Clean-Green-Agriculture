@@ -124,15 +124,13 @@ export const createOrder = CatchError(async (req, res, next) => {
  
   const invoiceTableHTML = `
   <!DOCTYPE html>
-<html lang="en">
-<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stylish Invoice Table</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #fff;
+      background-color: #f7f7f7;
       margin: 0;
       padding: 0;
     }
@@ -163,6 +161,7 @@ export const createOrder = CatchError(async (req, res, next) => {
     tr:hover {
       background-color: #e9e9e9;
     }
+
     .BestWishes{
       text-align: center;
       margin-top: 10px;
@@ -229,6 +228,7 @@ export const createOrder = CatchError(async (req, res, next) => {
 </body>
 </html>
 
+>>>>>>> 1a5dd29f58388354726b79b9d3962c79f9ccacf4
   
 `;
   const mailOptions = {
@@ -265,6 +265,7 @@ const isSent = await sendEmail(mailOptions);
         product_data: {
           name: product.name,
         },
+
         unit_amount: Math.round(product.itemPrice * 100),
       },
       quantity: product.quantity,
@@ -274,6 +275,7 @@ const isSent = await sendEmail(mailOptions);
         product_data: {
           name: subcategory.name,
         },
+        unit_amount: subcategory.itemPrice * 100,
         unit_amount:Math.round(subcategory.itemPrice * 100),
       },
       quantity: subcategory.quantity,
@@ -371,4 +373,5 @@ export const AllOrder=CatchError(async(req,res,next)=>{
   const order= await orderModel.find();
   res.status(200).json({success:true,status:200,order})
 })
+
 
