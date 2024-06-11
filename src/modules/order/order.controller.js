@@ -124,15 +124,24 @@ export const createOrder = CatchError(async (req, res, next) => {
  
   const invoiceTableHTML = `
   <!DOCTYPE html>
+<<<<<<< HEAD
   <html lang="en">
   <head>
+=======
+<html lang="en">
+<head>
+>>>>>>> 1a5dd29f58388354726b79b9d3962c79f9ccacf4
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stylish Invoice Table</title>
   <style>
     body {
       font-family: Arial, sans-serif;
+<<<<<<< HEAD
       background-color: #f7f7f7;
+=======
+      background-color: #fff;
+>>>>>>> 1a5dd29f58388354726b79b9d3962c79f9ccacf4
       margin: 0;
       padding: 0;
     }
@@ -163,6 +172,7 @@ export const createOrder = CatchError(async (req, res, next) => {
     tr:hover {
       background-color: #e9e9e9;
     }
+<<<<<<< HEAD
   </style>
   </head>
   <body>
@@ -202,6 +212,74 @@ export const createOrder = CatchError(async (req, res, next) => {
   </table>
   </body>
   </html>
+=======
+    .BestWishes{
+      text-align: center;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>${invoice.shipping.name}</td>
+      <td>اسم العميل</td>
+    </tr>
+    <tr>
+     
+      <td>${invoice.shipping.address}</td>
+      <td>العنوان</td>
+    </tr>
+    <tr>
+    <td>${invoice.shipping.country}</td>
+      <td>البلد</td>
+      
+    </tr>
+    <tr>
+    <td>${invoice.invoice_nr}</td>
+      <td>رقم الفاتورة</td>
+      
+    </tr>
+    <tr>
+    <td>${invoice.subtotal} EG</td>
+      <td>السعر قبل الخصم</td>
+      
+    </tr>
+    <tr>
+    <td>${invoice.paid} EG</td>
+      <td>السعر بعد الخصم</td>
+      
+    </tr>
+    <tr>
+    
+    <td>
+    ${invoice.items.map(item => `
+      
+       
+    ${item.name}
+    <br/>
+  
+`).join('')}
+  </td>
+  <td>المشتريات</td>
+  </tbody>
+</table>
+<div class=" BestWishes">
+<p>Thank you for shopping with us. We hope you are satisfied with our services.</p>
+<h3>Best Wishes : </h3>
+<h4>Clean And Green</h4>
+</div>
+</body>
+</html>
+
+>>>>>>> 1a5dd29f58388354726b79b9d3962c79f9ccacf4
   
 `;
   const mailOptions = {
@@ -238,7 +316,11 @@ const isSent = await sendEmail(mailOptions);
         product_data: {
           name: product.name,
         },
+<<<<<<< HEAD
         unit_amount: product.itemPrice * 100,
+=======
+        unit_amount: Math.round(product.itemPrice * 100),
+>>>>>>> 1a5dd29f58388354726b79b9d3962c79f9ccacf4
       },
       quantity: product.quantity,
     })).concat(order.subcategories.map((subcategory) => ({
@@ -247,7 +329,11 @@ const isSent = await sendEmail(mailOptions);
         product_data: {
           name: subcategory.name,
         },
+<<<<<<< HEAD
         unit_amount: subcategory.itemPrice * 100,
+=======
+        unit_amount:Math.round(subcategory.itemPrice * 100),
+>>>>>>> 1a5dd29f58388354726b79b9d3962c79f9ccacf4
       },
       quantity: subcategory.quantity,
     })));
@@ -344,3 +430,7 @@ export const AllOrder=CatchError(async(req,res,next)=>{
   const order= await orderModel.find();
   res.status(200).json({success:true,status:200,order})
 })
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1a5dd29f58388354726b79b9d3962c79f9ccacf4

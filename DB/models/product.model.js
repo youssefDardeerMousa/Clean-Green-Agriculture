@@ -36,10 +36,20 @@ const productSchema = new Schema(
 // *************** Virtuals ************ //
 productSchema.virtual("finalPrice").get(function () {
   // this >>> current document >>> product-schema
+<<<<<<< HEAD
   if (this.price) {
     return Number.parseFloat(
       this.price - (this.price * this.discount || 0) / 100
     ).toFixed(2);
+=======
+  // if (this.price) {
+  //   return Number.parseFloat(
+  //     this.price - (this.price * this.discount || 0) / 100
+  //   ).toFixed(2);
+  // }
+  if (this.price) {
+    return Math.round(this.price - (this.price * this.discount || 0) / 100)
+>>>>>>> 1a5dd29f58388354726b79b9d3962c79f9ccacf4
   }
 });
 

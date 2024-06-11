@@ -44,9 +44,18 @@ router.delete(
   deleteSubCategory
 );
 //all subcategories from categories
+<<<<<<< HEAD
 router.get("/", allSubCategories)
 // read SearchSubcategory
 
 router.get("/search", SearchSubcategory)
 router.get("/:subcategoryId",isValid(SubCategorySchema), singlesubcategory);
 export default router;
+=======
+router.get("/",isAuthenticated, allSubCategories)
+// read SearchSubcategory
+
+router.get("/search",isAuthenticated, SearchSubcategory)
+router.get("/:subcategoryId",isAuthenticated,isValid(SubCategorySchema), singlesubcategory);
+export default router;
+>>>>>>> 1a5dd29f58388354726b79b9d3962c79f9ccacf4

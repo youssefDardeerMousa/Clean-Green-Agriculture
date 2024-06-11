@@ -27,6 +27,7 @@ const orderSchema = new Schema(
         totalPrice: Number,
       },
     ],
+<<<<<<< HEAD
     invoice: {
       shipping: {
         name: { type: String },
@@ -38,6 +39,9 @@ const orderSchema = new Schema(
   paid: { type: Number },
   invoice_nr: { type: Schema.Types.ObjectId }, 
     }, // reciept
+=======
+    invoice: { id: String, url: String }, // reciept
+>>>>>>> 1a5dd29f58388354726b79b9d3962c79f9ccacf4
     address: {
       type: String,
       required: true,

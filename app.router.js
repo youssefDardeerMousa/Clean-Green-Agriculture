@@ -11,6 +11,10 @@ import CouponRouter from './src/modules/coupon/coupon.router.js'
 import OrderRouter from './src/modules/order/order.router.js'
 import bestsellerRouter from "./src/modules/bestseller/bestseller.router.js"
 import tokenRouter from "./src/modules/token/token.router.js"
+<<<<<<< HEAD
+=======
+import articleRouter from "./src/modules/articles/article.router.js"
+>>>>>>> 1a5dd29f58388354726b79b9d3962c79f9ccacf4
 dotenv.config()
 
 export const appRouter=(app,express)=>{
@@ -38,6 +42,11 @@ app.use("/order",OrderRouter)
 app.use("/bestseller",bestsellerRouter)
 //Token
 app.use("/token",tokenRouter)
+<<<<<<< HEAD
+=======
+// article Router
+app.use("/article",articleRouter)
+>>>>>>> 1a5dd29f58388354726b79b9d3962c79f9ccacf4
 // Base Url
 app.get("/",(req,res,next)=>{
     const temp = `
@@ -111,7 +120,10 @@ p {
 `
     res.status(200).header('Content-Type', 'text/html').send(temp);
 })
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1a5dd29f58388354726b79b9d3962c79f9ccacf4
 const Port=process.env.port
 app.listen(Port,()=>{
     console.log(`Server Is Running On Port ${Port}`);
