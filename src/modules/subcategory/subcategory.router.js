@@ -44,9 +44,9 @@ router.delete(
   deleteSubCategory
 );
 //all subcategories from categories
-router.get("/",isAuthenticated, allSubCategories)
+router.get("/", allSubCategories)
 // read SearchSubcategory
 
-router.get("/search",isAuthenticated, SearchSubcategory)
-router.get("/:subcategoryId",isAuthenticated,isValid(SubCategorySchema), singlesubcategory);
+router.get("/search", SearchSubcategory)
+router.get("/:subcategoryId",isValid(SubCategorySchema), singlesubcategory);
 export default router;
