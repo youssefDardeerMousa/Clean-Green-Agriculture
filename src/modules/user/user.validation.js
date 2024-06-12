@@ -23,6 +23,9 @@ export const loginSchema=Joi.object({
 export const forgetCodeSchema=Joi.object({
     Email : Joi.string().email().required(),
 }).required();
+export const verifyCodeSchema=Joi.object({
+    OTP : Joi.string().required(),
+}).required();
 
 // resetPassword resetPasswordSchema
 export const resetPasswordSchema=Joi.object({

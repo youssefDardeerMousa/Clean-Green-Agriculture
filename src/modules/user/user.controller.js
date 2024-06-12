@@ -158,7 +158,23 @@ export const sendForgetCode=async(req,res,next)=>{
     IsSent? res.status(200).json({status:200,result:true,Message:"Check Your Emaill"}) :new Error("Bad Request When  Reset code",{cause:400})
     
 }
+export const checkOtpCode = CatchError(async (req, res, next) => {
+  const {  OTP } = req.body;
 
+  // Check if the user exists
+  const user = await User.findOne({ ForgetCode: OTP });
+  if (!user) {
+      return next(new Error("Invalid OTP or User", { cause: 400 }));
+  }
+
+  // Verify the OTP code
+  if (user.ForgetCode !== OTP) {
+      return res.status(400).json({ result: false, status: 400, message: "Invalid OTP code" });
+  }
+
+  // OTP is correct, proceed with your logic (e.g., mark OTP as verified, etc.)
+  return res.status(200).json({ result: true, status: 200, message: "OTP verified successfully" });
+});
 //resetPassword
 
 export const resetPassword=async(req, res, next) => {
