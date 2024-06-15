@@ -9,8 +9,8 @@ const router = Router();
 
 router.post('/' ,isAuthenticated,isAuthorized("admin"),fileUpload(filterObject.image).single("articleImage")
 ,isValid(articleValidationSchema),CreateArticle);
-router.get('/' ,isAuthenticated,GetArticle);
-router.get('/:articleId' ,isAuthenticated,GetArticleById);
+router.get('/' ,GetArticle);
+router.get('/:articleId',GetArticleById);
 router.delete('/:articleId' ,isAuthenticated,DeleteArticle);
 router.put('/:articleId' ,isAuthenticated,isAuthorized("admin"),fileUpload(filterObject.image).single("articleImage"),UpdateArticle)
 

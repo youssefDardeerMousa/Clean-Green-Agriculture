@@ -45,6 +45,6 @@ router.delete(
 );
 
 // read
-router.get("/",isAuthenticated, allCoupons);
+router.get("/", allCoupons);
 
 export default router;

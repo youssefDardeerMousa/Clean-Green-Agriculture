@@ -56,12 +56,12 @@ router.patch(
 );
 
 // All Product
-router.get("/",isAuthenticated, allProducts);
+router.get("/", allProducts);
 
 // single product
-router.get("/:productId",isAuthenticated, isValid(productIdSchema), singleProduct);
+router.get("/:productId", isValid(productIdSchema), singleProduct);
 // search for product
-router.get("/search",isAuthenticated, SearchProduct);
+router.get("/search", SearchProduct);
 
 // read all products of certain category SearchProduct
 
