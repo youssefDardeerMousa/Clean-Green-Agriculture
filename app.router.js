@@ -13,6 +13,7 @@ import bestsellerRouter from "./src/modules/bestseller/bestseller.router.js"
 import tokenRouter from "./src/modules/token/token.router.js"
 
 import articleRouter from "./src/modules/articles/article.router.js"
+import contactusRouter from "./src/modules/contactus/contactus.router.js"
 dotenv.config()
 
 export const appRouter=(app,express)=>{
@@ -44,6 +45,7 @@ app.use("/token",tokenRouter)
 // article Router
 app.use("/article",articleRouter)
 // Base Url
+app.use("/contactus",contactusRouter)
 app.get("/",(req,res,next)=>{
     const temp = `
     <!DOCTYPE html>
