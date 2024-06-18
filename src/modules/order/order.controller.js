@@ -171,32 +171,32 @@ export const createOrder = CatchError(async (req, res, next) => {
     <tr>
       
       <td>${invoice.shipping.name}</td>
-      <td>Customer Name : </td>
+      <td>اسم العميل </td>
     </tr>
     <tr>
     
       <td>${invoice.shipping.address}</td>
-        <td>Address : </td>
+        <td>العنوان </td>
     </tr>
     <tr>
       
       <td>${invoice.shipping.country}</td>
-      <td>Country : </td>
+      <td>البلد </td>
     </tr>
     <tr>
      
       <td>${invoice.invoice_nr}</td>
-       <td>Invoice Number : </td>
+       <td>رقم الفاتورة </td>
     </tr>
     <tr>
       
       <td>${invoice.subtotal} EG</td>
-      <td>Subtotal : </td>
+      <td>السعر قبل الخصم </td>
     </tr>
     <tr>
       
       <td>${invoice.paid} EG</td>
-      <td>Paid Amount : </td>
+      <td>السعر بعد الخصم </td>
     </tr>
     <tr>
       
@@ -205,7 +205,7 @@ export const createOrder = CatchError(async (req, res, next) => {
         - ${item.name}<br/>
         `).join('')}
       </td>
-      <td>Items : </td>
+      <td>البضائع </td>
     </tr>
   </tbody>
 </table>
