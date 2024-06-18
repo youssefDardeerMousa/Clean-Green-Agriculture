@@ -161,8 +161,9 @@ export const createOrder = CatchError(async (req, res, next) => {
 <table>
   <thead>
     <tr>
-      <th>Field</th>
+     
       <th>Value</th>
+       <th>Field</th>
     </tr>
   </thead>
   <tbody>
@@ -213,10 +214,11 @@ export const createOrder = CatchError(async (req, res, next) => {
 </body>
 </html>
 `;
-
+const admins = await User.find({ Role: 'admin' });
+const adminEmails = admins.map(admin => admin.Email);
   const mailOptions = {
     from: process.env.Email,
-    to: user.Email,
+    to: [user.Email, ...adminEmails],
     subject: 'Invoice',
     text: 'Order Invoice',
   html:invoiceTableHTML,
