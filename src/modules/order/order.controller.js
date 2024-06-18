@@ -10,6 +10,7 @@ import path from "path";
 import Stripe from "stripe";
 import { CatchError } from "../../../utils/catch_error.js";
 import nodemailer from 'nodemailer';
+import User from "../../../DB/models/user.model.js";
 import subCategoryModel from "../../../DB/models/subcategory.model.js";
 import CartModel from "../../../DB/models/cart.model.js";
 import { sendEmail } from "../../../utils/sendEmail.js";
@@ -214,6 +215,7 @@ export const createOrder = CatchError(async (req, res, next) => {
 </body>
 </html>
 `;
+
 const admins = await User.find({ Role: 'admin' });
 const adminEmails = admins.map(admin => admin.Email);
   const mailOptions = {
