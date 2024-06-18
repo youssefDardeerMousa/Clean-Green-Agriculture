@@ -92,7 +92,6 @@ export const userCart = CatchError(async (req, res, next) => {
   if (!cart) return next(new Error("Cart not found", { status: 404 }));
 
   // Calculate total price and final price for products
-  //for each product old price
   let totalProductPrice = 0;
   cart.products.forEach((product) => {
     const price = product.productId.price;
@@ -101,7 +100,6 @@ export const userCart = CatchError(async (req, res, next) => {
   });
 
   // Calculate total final price for products
-   //for each product new price
   let totalProductFinalPrice = 0;
   cart.products.forEach((product) => {
     const finalPrice = product.productId.finalPrice;
@@ -124,23 +122,36 @@ export const userCart = CatchError(async (req, res, next) => {
     const quantity = subcategory.quantity;
     totalSubcategoryFinalPrice += finalPrice * quantity;
   });
-  let Paymentprice=0;
-  Paymentprice+=totalProductFinalPrice+totalSubcategoryFinalPrice
-  // Send response with total price and total final price
+
+  let Paymentprice = 0;
+  Paymentprice += totalProductFinalPrice + totalSubcategoryFinalPrice;
+
+  // Count the number of products and subcategories in the cart
+  const productCount = cart.products.length;
+  const subcategoryCount = cart.subcategory.length;
+  const totalCount = productCount + subcategoryCount;
+
+  // Send response with total price, total final price, and item counts
   return res.json({
     success: true,
     results: cart,
-    totalPriceBeforeDescount: {
+    totalPriceBeforeDiscount: {
       product: totalProductPrice,
       subcategory: totalSubcategoryPrice,
     },
-    totalFinalPriceAfterDescount: {
+    totalFinalPriceAfterDiscount: {
       product: totalProductFinalPrice,
       subcategory: totalSubcategoryFinalPrice,
     },
-    Paymentprice
+    Paymentprice,
+    itemCounts: {
+      productCount,
+      subcategoryCount,
+      totalCount
+    }
   });
 });
+
 
 
 export const updateCart = CatchError(async (req, res, next) => {
