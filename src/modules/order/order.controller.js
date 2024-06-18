@@ -228,7 +228,6 @@ export const createOrder = CatchError(async (req, res, next) => {
 </body>
 </html>
 
->>>>>>> 1a5dd29f58388354726b79b9d3962c79f9ccacf4
   
 `;
   const mailOptions = {
