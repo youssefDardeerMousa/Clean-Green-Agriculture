@@ -122,8 +122,10 @@ export const createOrder = CatchError(async (req, res, next) => {
  order.invoice = invoice;
  await order.save();
  
-  const invoiceTableHTML = `
-  <!DOCTYPE html>
+ const invoiceTableHTML = `
+<!DOCTYPE html>
+<html>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stylish Invoice Table</title>
@@ -134,37 +136,24 @@ export const createOrder = CatchError(async (req, res, next) => {
       margin: 0;
       padding: 0;
     }
-    
     table {
-      width: 50%;
+      width: 100%;
       margin: 20px auto;
       border-collapse: collapse;
-      background-color: #fff;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
     }
-    
     th, td {
       border: 1px solid #ddd;
       padding: 12px;
       text-align: left;
     }
-    
     th {
-      background-color: #f9f9f9;
+      background-color: #f2f2f2;
     }
-    
     tr:nth-child(even) {
       background-color: #f2f2f2;
     }
-    
     tr:hover {
       background-color: #e9e9e9;
-    }
-
-    .BestWishes{
-      text-align: center;
-      margin-top: 10px;
     }
   </style>
 </head>
@@ -178,58 +167,53 @@ export const createOrder = CatchError(async (req, res, next) => {
   </thead>
   <tbody>
     <tr>
+      
       <td>${invoice.shipping.name}</td>
-      <td>اسم العميل</td>
-    </tr>
-    <tr>
-     
-      <td>${invoice.shipping.address}</td>
-      <td>العنوان</td>
-    </tr>
-    <tr>
-    <td>${invoice.shipping.country}</td>
-      <td>البلد</td>
-      
-    </tr>
-    <tr>
-    <td>${invoice.invoice_nr}</td>
-      <td>رقم الفاتورة</td>
-      
-    </tr>
-    <tr>
-    <td>${invoice.subtotal} EG</td>
-      <td>السعر قبل الخصم</td>
-      
-    </tr>
-    <tr>
-    <td>${invoice.paid} EG</td>
-      <td>السعر بعد الخصم</td>
-      
+      <td>Customer Name : </td>
     </tr>
     <tr>
     
-    <td>
-    ${invoice.items.map(item => `
+      <td>${invoice.shipping.address}</td>
+        <td>Address : </td>
+    </tr>
+    <tr>
       
-       
-    ${item.name}
-    <br/>
-  
-`).join('')}
-  </td>
-  <td>المشتريات</td>
+      <td>${invoice.shipping.country}</td>
+      <td>Country : </td>
+    </tr>
+    <tr>
+     
+      <td>${invoice.invoice_nr}</td>
+       <td>Invoice Number : </td>
+    </tr>
+    <tr>
+      
+      <td>${invoice.subtotal} EG</td>
+      <td>Subtotal : </td>
+    </tr>
+    <tr>
+      
+      <td>${invoice.paid} EG</td>
+      <td>Paid Amount : </td>
+    </tr>
+    <tr>
+      
+      <td>
+        ${invoice.items.map(item => `
+        - ${item.name}<br/>
+        `).join('')}
+      </td>
+      <td>Items : </td>
+    </tr>
   </tbody>
 </table>
-<div class=" BestWishes">
-<p>Thank you for shopping with us. We hope you are satisfied with our services.</p>
-<h3>Best Wishes : </h3>
-<h4>Clean And Green</h4>
-</div>
+<p style="text-align: center; margin-top: 10px;">Thank you for shopping with us. We hope you are satisfied with our services.</p>
+<p style="text-align: center;">Best Wishes:</p>
+<h4 style="text-align: center; margin-bottom: 30px;">Clean And Green</h4>
 </body>
 </html>
-
-  
 `;
+
   const mailOptions = {
     from: process.env.Email,
     to: user.Email,
