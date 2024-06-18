@@ -3,14 +3,14 @@ import subCategoryModel from "../../../DB/models/subcategory.model.js";
 import { WishlistModel } from "../../../DB/models/wishlist.model.js";
 
 export const addToWishlist = async (req, res) => {
-  const { userId } = req.user;
+  const { _id } = req.user;
   const { id } = req.body;
 
   try {
-    let wishlist = await WishlistModel.findOne({ user: userId });
+    let wishlist = await WishlistModel.findOne({ user: _id });
 
     if (!wishlist) {
-      wishlist = new WishlistModel({ user: userId });
+      wishlist = new WishlistModel({ user: _id });
     }
 
     // Try to find the item in products first
@@ -45,11 +45,11 @@ export const addToWishlist = async (req, res) => {
 
   
 export const removeFromWishlist = async (req, res) => {
-  const { userId } = req.user;
-  const { id } = req.body;
+  const { _id } = req.user;
+    const { id } = req.body;
 
   try {
-    const wishlist = await WishlistModel.findOne({ user: userId });
+    const wishlist = await WishlistModel.findOne({ user: _id });
 
     if (!wishlist) {
       return res.status(404).json({ message: "Wishlist not found" });
@@ -78,10 +78,10 @@ export const removeFromWishlist = async (req, res) => {
 };
 
 export const getWishlist = async (req, res) => {
-  const { userId } = req.user;
+  const { _id } = req.user;
 
   try {
-    const wishlist = await WishlistModel.findOne({ user: userId })
+    const wishlist = await WishlistModel.findOne({ user: _id })
       .populate("products.productId")
       .populate("subcategories.subcategoryId");
 
