@@ -1,5 +1,4 @@
 import joi from "joi";
-import { IsValidObjectId } from "../../middleware/validation.middleware.js";
 
 // create product
 export const createProductSchema = joi
@@ -21,4 +20,20 @@ export const productIdSchema = joi
   })
   .required();
 
- 
+
+  export const validateSearchProduct = (req, res, next) => {
+    console.log('Received query:', req.query);
+  
+    const schema = Joi.object({
+      name: joi.string().required(),
+    });
+  
+    const { error } = schema.validate(req.query);
+  
+    if (error) {
+      console.log('Validation error:', error.message);
+      return res.status(400).json({ success: false, message: error.message });
+    }
+    
+    next();
+  };

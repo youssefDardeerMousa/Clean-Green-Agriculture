@@ -187,11 +187,14 @@ export const updateProduct = CatchError(async (req, res, next) => {
   // Send response
   return res.json({ success: true, results: updatedProduct });
 });
-export const SearchProduct = CatchError(async (req, res, next) => {
+export const searchProductByName = CatchError(async (req, res, next) => {
   const { name } = req.query;
   console.log(name);
-  // Changed $regex usage
-  const products = await productModel.find({ Name: { $regex: new RegExp(name, 'i') } })
-  
-  return res.json({ status: 200, success: true, products });
+
+  if (!name) {
+    return next(new Error('Name parameter is missing!', { cause: 400 }));
+  }
+
+  const products = await productModel.find({ Name: { $regex: new RegExp(name, 'i') } });
+  return res.json({ success: true, results: products });
 });

@@ -3,12 +3,13 @@ import { Router } from "express";
 import { isAuthorized } from "../../middleware/authorization.middleware.js";
 import { isValid } from "../../middleware/validation.middleware.js";
 import { fileUpload, filterObject } from "../../../utils/multer.js";
-import { createProductSchema, productIdSchema } from "./product.validation.js";
+import { createProductSchema, productIdSchema, validateSearchProduct } from "./product.validation.js";
 import {
-  SearchProduct,
+  
   addProduct,
   allProducts,
   deleteProduct,
+  searchProductByName,
   singleProduct,
   updateProduct
 } from "./product.controller.js";
@@ -61,8 +62,7 @@ router.get("/", allProducts);
 // single product
 router.get("/:productId", isValid(productIdSchema), singleProduct);
 // search for product
-router.get("/", SearchProduct);
-
+router.get('/search/searchbyName' , searchProductByName);
 // read all products of certain category SearchProduct
 
 export default router
