@@ -20,3 +20,7 @@ export const productIdSchema = joi
     productId: joi.string().custom(IsValidObjectId).required(),
   })
   .required();
+
+  export const searchQuerySchema = joi.object({
+    name: joi.string().min(1).required() // Adjust min length as necessary
+}).required();
