@@ -3,7 +3,7 @@ import { Router } from "express";
 import { isAuthorized } from "../../middleware/authorization.middleware.js";
 import { isValid } from "../../middleware/validation.middleware.js";
 import { fileUpload, filterObject } from "../../../utils/multer.js";
-import { createProductSchema, productIdSchema, searchQuerySchema } from "./product.validation.js";
+import { createProductSchema, productIdSchema } from "./product.validation.js";
 import {
   SearchProduct,
   addProduct,
@@ -61,7 +61,7 @@ router.get("/", allProducts);
 // single product
 router.get("/:productId", isValid(productIdSchema), singleProduct);
 // search for product
-router.get("/search",isValid(searchQuerySchema), SearchProduct);
+router.get("/", SearchProduct);
 
 // read all products of certain category SearchProduct
 

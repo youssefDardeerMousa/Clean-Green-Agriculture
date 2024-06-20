@@ -189,9 +189,9 @@ export const updateProduct = CatchError(async (req, res, next) => {
 });
 export const SearchProduct = CatchError(async (req, res, next) => {
   const { name } = req.query;
-  
+  console.log(name);
   // Changed $regex usage
-  const Product = await productModel.find({ Name: { $regex: new RegExp(name, 'i') } })
+  const products = await productModel.find({ Name: { $regex: new RegExp(name, 'i') } })
   
-  return res.json({ status: 200, success: true, Product });
+  return res.json({ status: 200, success: true, products });
 });

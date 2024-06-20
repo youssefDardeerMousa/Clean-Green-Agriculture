@@ -17,10 +17,8 @@ export const createProductSchema = joi
 // delete product + get single product
 export const productIdSchema = joi
   .object({
-    productId: joi.string().custom(IsValidObjectId).required(),
+    productId: joi.string().required(),
   })
   .required();
 
-  export const searchQuerySchema = joi.object({
-    name: joi.string().min(1).required() // Adjust min length as necessary
-}).required();
+ 

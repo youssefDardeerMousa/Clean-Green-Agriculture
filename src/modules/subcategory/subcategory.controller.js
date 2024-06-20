@@ -191,7 +191,7 @@ export const allSubCategories = CatchError(async (req, res, next) => {
 //search
 export const SearchSubcategory = CatchError(async (req, res, next) => {
   const { name } = req.query;
-  
+  console.log(name);
   // Changed $regex usage
   const subcategories = await subCategoryModel.find({ Name: { $regex: new RegExp(name, 'i') } })
   
