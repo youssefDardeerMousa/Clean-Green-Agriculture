@@ -89,16 +89,12 @@ export const getWishlist = async (req, res) => {
       return res.status(404).json({ message: "Wishlist not found" });
     }
 
-    const productCount = wishlist.products.length;
-    const subcategoryCount = wishlist.subcategories.length;
-    const totalCount = productCount + subcategoryCount;
-
     res.status(200).json({ 
       wishlist, 
       counts: {
-        productCount,
-        subcategoryCount,
-        totalCount
+        productCount: wishlist.productCount,
+        subcategoryCount: wishlist.subcategoryCount,
+        totalCount: wishlist.totalCount
       } 
     });
   } catch (error) {
