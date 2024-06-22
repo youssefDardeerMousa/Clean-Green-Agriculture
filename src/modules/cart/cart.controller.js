@@ -77,78 +77,29 @@ export const addToCart = CatchError(async (req, res, next) => {
 
 export const userCart = CatchError(async (req, res, next) => {
   const userId = req.user._id;
-  
+
+  // Fetch the cart and populate necessary fields
   const cart = await CartModel.findOne({ user: userId }).populate([
     {
       path: "products.productId",
-      select: "defaultImage.url _id Name Slug description images.url availableItems price discount finalPrice",
+      select: "defaultImage.url _id Name images.url availableItems price discount finalPrice",
     },
     {
       path: "subcategory.subcategoryId",
-      select: "Image.Url _id Name Slug description images.url availableItems price discount finalPrice",
+      select: "Image.Url _id Name images.url availableItems price discount finalPrice",
     }
   ]);
 
   if (!cart) return next(new Error("Cart not found", { status: 404 }));
 
-  // Calculate total price and final price for products
-  let totalProductPrice = 0;
-  cart.products.forEach((product) => {
-    const price = product.productId.price;
-    const quantity = product.quantity;
-    totalProductPrice += price * quantity;
-  });
-
-  // Calculate total final price for products
-  let totalProductFinalPrice = 0;
-  cart.products.forEach((product) => {
-    const finalPrice = product.productId.finalPrice;
-    const quantity = product.quantity;
-    totalProductFinalPrice += finalPrice * quantity;
-  });
-
-  // Calculate total price and final price for subcategories
-  let totalSubcategoryPrice = 0;
-  cart.subcategory.forEach((subcategory) => {
-    const price = subcategory.subcategoryId.price;
-    const quantity = subcategory.quantity;
-    totalSubcategoryPrice += price * quantity;
-  });
-
-  // Calculate total final price for subcategories
-  let totalSubcategoryFinalPrice = 0;
-  cart.subcategory.forEach((subcategory) => {
-    const finalPrice = subcategory.subcategoryId.finalPrice;
-    const quantity = subcategory.quantity;
-    totalSubcategoryFinalPrice += finalPrice * quantity;
-  });
-
-  let Paymentprice = 0;
-  Paymentprice += totalProductFinalPrice + totalSubcategoryFinalPrice;
-
-  // Count the number of products and subcategories in the cart
-  const productCount = cart.products.length;
-  const subcategoryCount = cart.subcategory.length;
-  const totalCount = productCount + subcategoryCount;
-
-  // Send response with total price, total final price, and item counts
+  // Send response with virtual properties included
   return res.json({
     success: true,
     results: cart,
-    totalPriceBeforeDiscount: {
-      product: totalProductPrice,
-      subcategory: totalSubcategoryPrice,
-    },
-    totalFinalPriceAfterDiscount: {
-      product: totalProductFinalPrice,
-      subcategory: totalSubcategoryFinalPrice,
-    },
-    Paymentprice,
-    itemCounts: {
-      productCount,
-      subcategoryCount,
-      totalCount
-    }
+    totalPriceBeforeDiscount: cart.totalPriceBeforeDiscount,
+    totalFinalPriceAfterDiscount: cart.totalFinalPriceAfterDiscount,
+    Paymentprice: cart.Paymentprice,
+    itemCounts: cart.itemCounts
   });
 });
 
